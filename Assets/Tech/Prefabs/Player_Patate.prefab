@@ -90,11 +90,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _walkSpeed: 5
-  _dashSpeed: 30
-  _dashDelay: 1
+  _dashSpeed: 20
+  _beingPushedSpeed: 25
+  _dashDelay: 0.2
   _throwDelay: 1
+  _beingPushedDelay: 0.22
   _cc: {fileID: 3582550880432879440}
   _indicators: {fileID: 4802642710156427717}
+  _idleSprite: {fileID: -1435682832, guid: 4eee1f3cc70f7774d8bc1a3ac1cf9ccf, type: 3}
+  _dashSprite: {fileID: -1058572672, guid: 3501a11a7324c1c488929414bf742a75, type: 3}
+  _hurtSprite: {fileID: -182437427, guid: 3501a11a7324c1c488929414bf742a75, type: 3}
 --- !u!114 &3582550880432879442
 MonoBehaviour:
   m_ObjectHideFlags: 0
