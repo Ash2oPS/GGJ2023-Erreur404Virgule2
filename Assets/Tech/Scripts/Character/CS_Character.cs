@@ -7,7 +7,11 @@ public class CS_Character : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _sr;
     [SerializeField] private Sprite _groundedSprite, _hopSprite, _preBigHopSprite, _bigHopSprite;
+    [SerializeField] private Sprite _deadByHitSprite, _deadBySploucthSprite, _deadByBurnSprite, _deadByCutSprite;
     [SerializeField] private AnimationCurve _bigHopCurve;
+    [SerializeField] private Animation _animation;
+    [SerializeField] private string _animationFileName;
+
     private bool _canHop = true;
 
     private Coroutine _currentCor;
@@ -73,6 +77,72 @@ public class CS_Character : MonoBehaviour
                 ChangeSprite(_groundedSprite);
             }
         }
+    }
+
+    /// <summary>
+    /// whatDeath : 0 => Hit, 1 => Sploutch, 2 => Burn, 3 => Cut
+    /// </summary>
+    public void DieFromCringe(int whatDeath)
+    {
+        StartCoroutine(DieCoroutine(whatDeath));
+    }
+
+    private IEnumerator DieCoroutine(int whatDeath)
+    {
+        Sprite deathSprite = null;
+
+        switch (whatDeath)
+        {
+            case 0:
+                deathSprite = _deadByHitSprite;
+                break;
+
+            case 1:
+                deathSprite = _deadBySploucthSprite;
+                break;
+
+            case 2:
+                deathSprite = _deadByBurnSprite;
+                break;
+
+            case 3:
+                deathSprite = _deadByCutSprite;
+                break;
+        }
+
+        transform.parent = null;
+        SetCanHop(false);
+
+        _animation.Play(_animationFileName);
+
+        _sr.sprite = deathSprite;
+        yield return new WaitForSeconds(0.45f);
+        _sr.color = new Color(1, 1, 1, 0);
+        yield return new WaitForSeconds(0.35f);
+        _sr.color = Color.white;
+        yield return new WaitForSeconds(0.35f);
+        _sr.color = new Color(1, 1, 1, 0);
+        yield return new WaitForSeconds(0.15f);
+        _sr.color = Color.white;
+        yield return new WaitForSeconds(0.15f);
+        _sr.color = new Color(1, 1, 1, 0);
+        yield return new WaitForSeconds(0.1f);
+        _sr.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
+    }
+
+    public void BeingHeld()
+    {
+        StartCoroutine(HeldCoroutine());
+    }
+
+    private IEnumerator HeldCoroutine()
+    {
+    }
+
+    public void BeingThrown()
+    {
     }
 
     private void Update()

@@ -8,6 +8,9 @@ public class CS_GameManager : MonoBehaviour
     [Header("---Parameters---")]
     [SerializeField] private int _startingScore = 1;
 
+    [Header("---References---")]
+    [SerializeField] private CS_Piege _piege;
+
     private CS_Player _patatePlayer, _carottePlayer;
     private CS_ScoreUI _scoreUI;
 

@@ -15,6 +15,11 @@ public class CS_Movement : MonoBehaviour
     private Vector2 _beingPushedDir;
     private Vector2 _dashDir;
 
+    private float durationBeingPushed = 0f;
+    [SerializeField] private AnimationCurve beingPushedSpeedCurve;
+
+    private float _timeSinceNotGrounded;
+
     private Vector2 _inputDirection;
     private float yDir;
 
@@ -80,11 +85,11 @@ public class CS_Movement : MonoBehaviour
     {
         if (_cc.isGrounded)
         {
-            yDir = -1;
+            yDir = 0;
             return;
         }
 
-        yDir -= 1 * Time.deltaTime;
+        yDir -= 10 * Time.deltaTime;
     }
 
     private void Move()
@@ -100,7 +105,7 @@ public class CS_Movement : MonoBehaviour
         }
 
         Vector3 trueDirection = new Vector3(actualDir.x * _walkSpeed * Time.deltaTime,
-            yDir,
+            yDir * Time.deltaTime,
             actualDir.y * _walkSpeed * Time.deltaTime);
 
         _cc.Move(trueDirection);
@@ -111,10 +116,8 @@ public class CS_Movement : MonoBehaviour
         if (!_isBeingPushed)
             return;
 
-        Debug.Log($"Being pushed {transform.name} {_beingPushedDir}");
-
         Vector3 dirToBeingPushed = new Vector3(_beingPushedDir.x, 0, _beingPushedDir.y);
-        _cc.Move(dirToBeingPushed * _beingPushedSpeed * Time.deltaTime);
+        _cc.Move(dirToBeingPushed * _beingPushedSpeed * Time.deltaTime * beingPushedSpeedCurve.Evaluate(durationBeingPushed / _beingPushedDelay));
     }
 
     private void Dash()
@@ -169,9 +172,7 @@ public class CS_Movement : MonoBehaviour
     private IEnumerator DashCoroutine()
     {
         SetIsDashing(true);
-
         yield return new WaitForSeconds(_dashDelay);
-
         SetIsDashing(false);
     }
 
@@ -186,7 +187,15 @@ public class CS_Movement : MonoBehaviour
     {
         _isBeingPushed = true;
         SetInBeingHurt(true);
-        yield return new WaitForSeconds(_beingPushedDelay);
+        durationBeingPushed = 0f;
+
+        while (durationBeingPushed < _beingPushedDelay)
+        {
+            durationBeingPushed += Time.deltaTime;
+
+            yield return new WaitForEndOfFrame();
+        }
+
         _isBeingPushed = false;
         _beingPushedDir = Vector2.zero;
         SetInBeingHurt(false);
@@ -270,7 +279,7 @@ public class CS_Movement : MonoBehaviour
 
             foreach (var item in GetComponentsInChildren<CS_Character>())
             {
-                item.SetCanHop(true);
+                item.SetCanHop(false);
             }
             return;
         }

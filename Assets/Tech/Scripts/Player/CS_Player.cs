@@ -92,7 +92,10 @@ public abstract class CS_Player : MonoBehaviour
         return output;
     }
 
-    public void RemoveCharacter(CS_Character pc)
+    /// <summary>
+    /// whatDeath : 0 => Hit, 1 => Sploutch, 2 => Burn, 3 => Cut
+    /// </summary>
+    public void RemoveCharacter(CS_Character pc, int whatDeath)
     {
         if (!_currentPlayerControllers.Contains(pc))
         {
@@ -101,9 +104,32 @@ public abstract class CS_Player : MonoBehaviour
             return;
         }
 
-        CS_Character tempPc = pc;
+        pc.DieFromCringe(whatDeath);
+    }
 
-        _currentPlayerControllers.Remove(pc);
-        Destroy(tempPc.gameObject);
+    /// <summary>
+    /// whatDeath : 0 => Hit, 1 => Sploutch, 2 => Burn, 3 => Cut
+    /// </summary>
+    public void RemoveCharacter(int whatDeath)
+    {
+        RemoveCharacter(GetFarthestCharacter(), whatDeath);
+    }
+
+    private CS_Character GetFarthestCharacter()
+    {
+        float dist = 0f;
+        CS_Character output = null;
+
+        Debug.Log(GetComponentsInChildren<CS_Character>().Length);
+        foreach (var item in GetComponentsInChildren<CS_Character>())
+        {
+            if (item.transform.localPosition.magnitude > dist)
+            {
+                dist = item.transform.localPosition.magnitude;
+                output = item;
+            }
+        }
+
+        return output;
     }
 }

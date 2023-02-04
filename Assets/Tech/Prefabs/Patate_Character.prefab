@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4962127358709986432}
   - component: {fileID: 4962127358709986435}
+  - component: {fileID: 204606985349910353}
   m_Layer: 0
   m_Name: Patate_Character
   m_TagString: Untagged
@@ -135,6 +136,10 @@ MonoBehaviour:
   _hopSprite: {fileID: -1435682832, guid: 4eee1f3cc70f7774d8bc1a3ac1cf9ccf, type: 3}
   _preBigHopSprite: {fileID: -1270730718, guid: 4eee1f3cc70f7774d8bc1a3ac1cf9ccf, type: 3}
   _bigHopSprite: {fileID: -182437427, guid: 3501a11a7324c1c488929414bf742a75, type: 3}
+  _deadByHitSprite: {fileID: 21300000, guid: 6dd94f338dfd181498a0678c7b8ecd95, type: 3}
+  _deadBySploucthSprite: {fileID: 21300000, guid: 8abf46b7b56e44646b3c1e612f12955c, type: 3}
+  _deadByBurnSprite: {fileID: 21300000, guid: e3a6268a4ce083446ab57631b415ab0c, type: 3}
+  _deadByCutSprite: {fileID: 21300000, guid: f25462a7da24ce24095803660d2bb964, type: 3}
   _bigHopCurve:
     serializedVersion: 2
     m_Curve:
@@ -159,6 +164,24 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _animation: {fileID: 204606985349910353}
+  _animationFileName: A_Patate_Die
+--- !u!111 &204606985349910353
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962127358709986437}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: d7a03290e1615db49a4ad79cb6407f89, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &8219167150709280545
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +207,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8219167150709280545}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0.052}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
