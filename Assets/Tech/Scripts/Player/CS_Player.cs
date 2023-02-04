@@ -11,6 +11,7 @@ public abstract class CS_Player : MonoBehaviour
     [SerializeField] protected CharacterController _cc;
     [SerializeField] protected MeshRenderer _debugColliderSphere;
     [SerializeField] protected CS_Character _characterPrefab;
+    [SerializeField] protected CS_Indicators _indicators;
 
     protected CS_GameManager _gm;
 
@@ -24,6 +25,8 @@ public abstract class CS_Player : MonoBehaviour
     private void Start()
     {
         CharacterListInitialization();
+
+        SetColliderSize();
     }
 
     protected void CharacterListInitialization()
@@ -38,26 +41,31 @@ public abstract class CS_Player : MonoBehaviour
         }
     }
 
-    public void AddCharacter()
+    public void SetColliderSize()
     {
-        _score++;
-
         _cc.radius = _baseColliderRadius * (1f + Mathf.Pow(_score, _radiusScaleParameter));
         _cc.center = new Vector3(0, _cc.radius, 0);
         _debugColliderSphere.transform.localScale = Vector3.one * _cc.radius * 2;
         _debugColliderSphere.transform.localPosition = new Vector3(0, _cc.radius, 0);
+        _indicators.SetColliderIndicatorRadius(_cc.radius);
+    }
+
+    public void AddCharacter()
+    {
+        _score++;
+
+        SetColliderSize();
 
         CS_Character newCharacter = Instantiate(_characterPrefab, transform);
         _currentPlayerControllers.Add(newCharacter);
 
-        Vector3 pos = new Vector3(
-            Random.Range(-1f, 1f),
-            0,
-            Random.Range(-1f, 1f)
-            );
+        Vector2 posAsVector2 = GetRandomInVector2();
 
-        if (pos.magnitude > 1)
-            pos.Normalize();
+        Vector3 pos = new Vector3(
+            posAsVector2.x,
+            0,
+            posAsVector2.y
+            );
 
         pos *= _cc.radius;
 
@@ -67,6 +75,21 @@ public abstract class CS_Player : MonoBehaviour
             _gm.AddCharacterUI(0);
         else if (this is CS_CarottePlayer)
             _gm.AddCharacterUI(1);
+    }
+
+    private Vector2 GetRandomInVector2()
+    {
+        Vector2 output = Vector2.zero;
+
+        while (output == Vector2.zero || output.magnitude > 1)
+        {
+            output = new Vector2(
+                Random.Range(-1f, 1f),
+                Random.Range(-1f, 1f)
+                );
+        }
+
+        return output;
     }
 
     public void RemoveCharacter(CS_Character pc)

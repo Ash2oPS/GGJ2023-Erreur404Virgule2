@@ -6,7 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public class CS_GameManager : MonoBehaviour
 {
     [Header("---Parameters---")]
-    [SerializeField] private int _startingScore = 3;
+    [SerializeField] private int _startingScore = 1;
 
     private CS_Player _patatePlayer, _carottePlayer;
     private CS_ScoreUI _scoreUI;
@@ -30,13 +30,8 @@ public class CS_GameManager : MonoBehaviour
         SetScoreUI(_startingScore, 0);
         SetScoreUI(_startingScore, 1);
 
-        Debug.Log("Là y a le while qui fait tout crasher");
-
-        //while (_patatePlayer.Score < _patateScore && _carottePlayer.Score < _carotteScore)
-        //{
-        //    _patatePlayer.AddCharacter();
-        //    _carottePlayer.AddCharacter();
-        //}
+        _patatePlayer.SetColliderSize();
+        _carottePlayer.SetColliderSize();
     }
 
     public void SetScoreUI(int score, int player)

@@ -19,10 +19,10 @@ public class CS_PlayerController : MonoBehaviour
 
     private void Start()
     {
-        if (_inputs.Length != 4)
+        if (_inputs.Length != 6)
         {
             Debug.LogWarning("Attention loser, t'as pas bien rempli les inputs. Pis faut que ça soit :" +
-                "0 -> up, 1 -> right, 2 -> down, 3 -> left");
+                "0 -> up, 1 -> right, 2 -> down, 3 -> left, 4 -> Dash, 5 -> Throw");
             return;
         }
     }
@@ -37,6 +37,16 @@ public class CS_PlayerController : MonoBehaviour
         }
 
         CallRegisterMove();
+
+        if (Input.GetKeyDown(_inputs[4]))
+        {
+            CallDash();
+        }
+
+        if (Input.GetKeyDown(_inputs[5]))
+        {
+            CallThrow();
+        }
     }
 
     private void GetInput(int index)
@@ -52,6 +62,17 @@ public class CS_PlayerController : MonoBehaviour
             else if (index == 3)
                 _currentDirection = new Vector2(-1, _currentDirection.y);
         }
+    }
+
+    private void CallDash()
+    {
+        _movement.RegisterDash();
+    }
+
+    private void CallThrow()
+    {
+        Debug.Log("oui " + transform.name);
+        _movement.RegisterThrow();
     }
 
     private void CallRegisterMove()
