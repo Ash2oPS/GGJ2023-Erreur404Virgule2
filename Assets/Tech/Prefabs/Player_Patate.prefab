@@ -90,11 +90,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _walkSpeed: 5
-  _dashSpeed: 20
-  _beingPushedSpeed: 25
-  _dashDelay: 0.2
+  _dashSpeed: 15
+  _beingPushedSpeed: 5
+  _dashDelay: 0.35
   _throwDelay: 1
-  _beingPushedDelay: 0.22
+  _beingPushedDelay: 0.1
   _cc: {fileID: 3582550880432879440}
   _indicators: {fileID: 4802642710156427717}
   _idleSprite: {fileID: -1435682832, guid: 4eee1f3cc70f7774d8bc1a3ac1cf9ccf, type: 3}

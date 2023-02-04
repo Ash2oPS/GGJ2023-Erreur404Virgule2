@@ -173,11 +173,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _walkSpeed: 5
-  _dashSpeed: 20
-  _beingPushedSpeed: 25
-  _dashDelay: 0.2
+  _dashSpeed: 15
+  _beingPushedSpeed: 5
+  _dashDelay: 0.35
   _throwDelay: 1
-  _beingPushedDelay: 0.22
+  _beingPushedDelay: 0.1
   _cc: {fileID: 1542500589945287268}
   _indicators: {fileID: 1002926567736447692}
   _idleSprite: {fileID: -1600814630, guid: 34cff649e58547d4b9be40ac19c27d8a, type: 3}
