@@ -181,7 +181,7 @@ MonoBehaviour:
   _cc: {fileID: 1542500589945287268}
   _indicators: {fileID: 1002926567736447692}
   _idleSprite: {fileID: -1600814630, guid: 34cff649e58547d4b9be40ac19c27d8a, type: 3}
-  _dashSprite: {fileID: 681244323, guid: 66914184b8cdf5640bd7960e17cc5712, type: 3}
+  _dashSprite: {fileID: 21300000, guid: 5c5af2492a0ed004098a9acffb290594, type: 3}
   _hurtSprite: {fileID: -370278192, guid: 66914184b8cdf5640bd7960e17cc5712, type: 3}
 --- !u!114 &1542500589945287269
 MonoBehaviour:
