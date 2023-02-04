@@ -3600,18 +3600,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1542500589945287270, guid: 5770b695a271d1e4fa391e125347617c, type: 3}
-      propertyPath: _hurtSprite
-      value: 
-      objectReference: {fileID: 48199452, guid: 9fbd309d946c2b04ab358c209ecbebc0, type: 3}
-    - target: {fileID: 1542500589945287270, guid: 5770b695a271d1e4fa391e125347617c, type: 3}
-      propertyPath: _beingPushedDelay
-      value: 0.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 1542500589945287270, guid: 5770b695a271d1e4fa391e125347617c, type: 3}
-      propertyPath: _beingPushedSpeed
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 1542500589945287289, guid: 5770b695a271d1e4fa391e125347617c, type: 3}
       propertyPath: m_Name
       value: Player_Carotte
@@ -3669,18 +3657,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3582550880432879441, guid: b9cb402169d980c479c93589ba7581db, type: 3}
-      propertyPath: _hurtSprite
-      value: 
-      objectReference: {fileID: -182437427, guid: 3501a11a7324c1c488929414bf742a75, type: 3}
-    - target: {fileID: 3582550880432879441, guid: b9cb402169d980c479c93589ba7581db, type: 3}
-      propertyPath: _beingPushedDelay
-      value: 0.22
-      objectReference: {fileID: 0}
-    - target: {fileID: 3582550880432879441, guid: b9cb402169d980c479c93589ba7581db, type: 3}
-      propertyPath: _beingPushedSpeed
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 3582550880432879468, guid: b9cb402169d980c479c93589ba7581db, type: 3}
       propertyPath: m_RootOrder
       value: 7

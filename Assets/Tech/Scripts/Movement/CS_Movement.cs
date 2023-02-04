@@ -152,6 +152,14 @@ public class CS_Movement : MonoBehaviour
 
     private void UpdateLastDir(Vector2 dir)
     {
+        if (_lastDirection.x != dir.x)
+        {
+            foreach (var item in GetComponentsInChildren<CS_Character>())
+            {
+                item.SetSpriteDir(Mathf.RoundToInt(dir.x));
+            }
+        }
+
         _lastDirection = dir;
         _indicators.SetOrientation(Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg);
     }

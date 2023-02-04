@@ -133,6 +133,32 @@ MonoBehaviour:
   _sr: {fileID: 4962127357755787170}
   _groundedSprite: {fileID: -1270730718, guid: 4eee1f3cc70f7774d8bc1a3ac1cf9ccf, type: 3}
   _hopSprite: {fileID: -1435682832, guid: 4eee1f3cc70f7774d8bc1a3ac1cf9ccf, type: 3}
+  _preBigHopSprite: {fileID: -1270730718, guid: 4eee1f3cc70f7774d8bc1a3ac1cf9ccf, type: 3}
+  _bigHopSprite: {fileID: -182437427, guid: 3501a11a7324c1c488929414bf742a75, type: 3}
+  _bigHopCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.004333496
+      inSlope: 2.6464412
+      outSlope: 2.6464412
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.060868733
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1.5124454
+      outSlope: -1.5124454
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.09794152
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8219167150709280545
 GameObject:
   m_ObjectHideFlags: 0
