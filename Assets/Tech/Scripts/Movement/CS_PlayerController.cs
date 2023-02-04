@@ -43,7 +43,7 @@ public class CS_PlayerController : MonoBehaviour
             CallDash();
         }
 
-        if (Input.GetKeyDown(_inputs[5]))
+        if (Input.GetKey(_inputs[5]))
         {
             CallThrow();
         }
@@ -71,7 +71,6 @@ public class CS_PlayerController : MonoBehaviour
 
     private void CallThrow()
     {
-        Debug.Log("oui " + transform.name);
         _movement.RegisterThrow();
     }
 
