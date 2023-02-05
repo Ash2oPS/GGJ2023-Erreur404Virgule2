@@ -65,6 +65,7 @@ public class CS_Movement : MonoBehaviour
 
     private int _numberOfLegumesHeld = 0;
     [SerializeField] private float _delayBetweenNewHeldLegume;
+    [SerializeField] List<CS_Character> charactersBeingHeld;
 
     public void RegisterHold()
     {
@@ -75,6 +76,9 @@ public class CS_Movement : MonoBehaviour
 
     private IEnumerator HoldingCoroutine()
     {
+        if (charactersBeingHeld == null) charactersBeingHeld = new List<CS_Character>();
+        charactersBeingHeld.Clear();
+
         bool isCarotte = TryGetComponent(out CS_CarottePlayer c);
         bool isPatate = TryGetComponent(out CS_PatatePlayer p);
 
@@ -91,6 +95,8 @@ public class CS_Movement : MonoBehaviour
 
             CS_Character oui = GetFarthestCharacter();
 
+            charactersBeingHeld.Add(oui);
+
             if (isCarotte)
                 c.RemoveCharacter(oui, -1);
             else p.RemoveCharacter(oui, -1);
@@ -103,11 +109,47 @@ public class CS_Movement : MonoBehaviour
 
     public void RegisterStopHold()
     {
+        Debug.Log("VOLE");
         StopCoroutine(_currentHoldingCoroutine);
 
         _currentHoldingCoroutine = null;
 
         _isHolding = false;
+
+        if (_numberOfLegumesHeld > 0)
+        {
+            ThrowHeldCharacters();
+        }
+    }
+
+    public void ThrowHeldCharacters()
+    {
+        Debug.Log("VOLE2");
+        foreach (var legume in charactersBeingHeld)
+        {
+            legume.transform.parent = null;
+            Debug.Log("VOLE3");
+            MoveCharacter(legume);
+        }
+    }
+    private void MoveCharacter(CS_Character character)
+    {
+        Vector2 actualDir = _inputDirection;
+
+        Vector3 trueDirection = new Vector3(actualDir.x * _walkSpeed * 3f * Time.deltaTime,
+            yDir * Time.deltaTime,
+            actualDir.y * _walkSpeed * 3f * Time.deltaTime);
+
+        StartCoroutine(CharacterFlying(trueDirection, character));
+    }
+    private IEnumerator CharacterFlying(Vector3 velocity, CS_Character character)
+    {
+        character.transform.position = new Vector3(character.transform.position.x, 0.3f, character.transform.position.z);
+        while (true)
+        {
+            character.transform.position += velocity;
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     private void Update()
