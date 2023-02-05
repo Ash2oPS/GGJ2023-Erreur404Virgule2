@@ -17,6 +17,11 @@ public class CS_Piege : CS_OnTerrainActor
 
     public bool IsEnabled => _isEnabled;
 
+    public virtual void SetEnabled()
+    {
+        _isEnabled = true;
+    }
+
     protected override void OnPlayerInteraction(CS_Player player)
     {
         if (!_isEnabled)

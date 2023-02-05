@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CS_BunnySpot : CS_Piege
 {
-    [SerializeField] private SpriteRenderer _sr;
-    [SerializeField] private Sprite _bunnySprite;
+    [SerializeField] private SkinnedMeshRenderer _bunnyRenderer;
+    [SerializeField] private Animation _anim;
 
     private CS_GameManager _gm;
 
@@ -16,8 +16,18 @@ public class CS_BunnySpot : CS_Piege
 
     public void SetBunnyHere()
     {
+        SetEnabled();
+    }
+
+    public override void SetEnabled()
+    {
+        _anim.Play("A_TerrierMove");
+    }
+
+    public void BunnyApper()
+    {
         _isEnabled = true;
-        _sr.sprite = _bunnySprite;
+        _bunnyRenderer.enabled = true;
     }
 
     public void RemoveBunnyFromHere()
@@ -27,7 +37,7 @@ public class CS_BunnySpot : CS_Piege
             return;
         }
 
-        _sr.sprite = null;
+        _bunnyRenderer.enabled = false;
         _isEnabled = false;
     }
 

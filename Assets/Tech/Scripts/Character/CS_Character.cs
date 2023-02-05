@@ -33,7 +33,6 @@ public class CS_Character : MonoBehaviour
     private void Start()
     {
         _currentCor = StartCoroutine(HopCoroutine());
-        _currentCor = StartCoroutine(StartParticles());
         _baseY = _sr.transform.localPosition.y;
     }
 
@@ -42,17 +41,6 @@ public class CS_Character : MonoBehaviour
         SetCanHop(value);
 
         _sr.sprite = value ? _pushedSprite : _groundedSprite;
-    }
-
-    private IEnumerator StartParticles()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(3);
-            {
-                SpawnParticle();
-            }
-        }
     }
 
     public void SpawnParticle()

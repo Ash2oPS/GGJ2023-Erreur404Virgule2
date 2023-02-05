@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using TMPro;
 using Random = UnityEngine.Random;
+using JetBrains.Annotations;
 
 public class CS_GameManager : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class CS_GameManager : MonoBehaviour
     [SerializeField] private Animation _winAnim;
 
     [SerializeField] private CS_BunnySpot[] _allBunnySpots;
+    [SerializeField] private CS_FertilisantSpot[] _allFertilisantSpots;
 
     [SerializeField] private AudioSource _audioSource;
 
@@ -225,14 +227,36 @@ public class CS_GameManager : MonoBehaviour
     public void RemoveBunnyFromSpot(int index, bool stopCoroutine = false)
     {
         _allBunnySpots[index].RemoveBunnyFromHere();
-        StopCoroutine(_currentBunnyCoroutine);
 
         if (stopCoroutine)
+        {
+            StopCoroutine(_currentBunnyCoroutine);
+
             _currentBunnyCoroutine = StartCoroutine(BunnySpotsManagement());
+        }
     }
 
     public void RemoveBunnyFromSpot(CS_BunnySpot index, bool stopCoroutine = false)
     {
         RemoveBunnyFromSpot(Array.IndexOf(_allBunnySpots, index), stopCoroutine);
+    }
+
+    private last
+
+    public void SpotNewFertilisant(int index)
+    {
+        int random = -1;
+
+        int numberOfTries = 0;
+
+        bool found = false;
+
+        while (random == -1 && _allFertilisantSpots[random].IsEnabled && numberOfTries < 4)
+        {
+            random = Random.Range(0, _allFertilisantSpots.Length);
+            numberOfTries++;
+        }
+
+        _allFertilisantSpots[random].SpawnFertilisant(index);
     }
 }

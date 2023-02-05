@@ -6,8 +6,6 @@ public abstract class CS_OnTerrainActor : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("non ");
-
         if (other.TryGetComponent(out CS_Player player))
             OnPlayerInteraction(player);
     }
