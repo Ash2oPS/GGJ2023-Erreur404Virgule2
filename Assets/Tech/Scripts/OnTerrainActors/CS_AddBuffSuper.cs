@@ -8,6 +8,7 @@ public class CS_AddBuffSuper : CS_OnTerrainActor
     {
         player.AddCharacter();
         player.AddCharacter();
+        player.AddCharacter();
         Destroy(gameObject);
     }
 }

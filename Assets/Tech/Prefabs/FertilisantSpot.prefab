@@ -44,3 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e2497db1b435447b650808bbf579eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _numberOfLegumesToRemove: 0
+  _whatDeath: 0
+  _audioScource: {fileID: 0}
+  _activationSound: {fileID: 0}
+  _isEnabled: 0
+  _normalPrefab: {fileID: 3572872229021345031, guid: 6ad392b4e9d562c42ad6a312f8d0abea, type: 3}
+  _superPrefab: {fileID: 8231920168298636346, guid: 1330af7a2ad168142bed468d08ac22cd, type: 3}
+  _megaPrefab: {fileID: 1152364326598360360, guid: 62d72e1f62e3dfe4288810815c9be2fe, type: 3}

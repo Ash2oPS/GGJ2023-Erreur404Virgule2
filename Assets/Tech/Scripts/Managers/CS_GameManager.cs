@@ -127,6 +127,8 @@ public class CS_GameManager : MonoBehaviour
 
         _currentBunnyCoroutine = StartCoroutine(BunnySpotsManagement());
         StartCoroutine(BunnyValuesEvolution());
+        StartCoroutine(FertilisantSpawning());
+        StartCoroutine(FertilisantFactor());
     }
 
     public void SetScoreUI(int score, int player)
@@ -241,22 +243,85 @@ public class CS_GameManager : MonoBehaviour
         RemoveBunnyFromSpot(Array.IndexOf(_allBunnySpots, index), stopCoroutine);
     }
 
-    private last
+    private int _lastSpot = -1;
+
+    private int maxFertilisants = 2;
+
+    private int _currentFertilisants = 0;
 
     public void SpotNewFertilisant(int index)
     {
-        int random = -1;
+        int random = Random.Range(0, _allFertilisantSpots.Length);
 
         int numberOfTries = 0;
 
         bool found = false;
 
-        while (random == -1 && _allFertilisantSpots[random].IsEnabled && numberOfTries < 4)
+        while (_allFertilisantSpots[random].IsEnabled && numberOfTries < 10 && random != _lastSpot)
         {
+            Debug.Log("Oulah oui");
             random = Random.Range(0, _allFertilisantSpots.Length);
             numberOfTries++;
         }
 
-        _allFertilisantSpots[random].SpawnFertilisant(index);
+        if (numberOfTries < 10)
+        {
+            found = true;
+        }
+
+        if (found)
+        {
+            _lastSpot = random;
+            _allFertilisantSpots[random].SpawnFertilisant(index);
+            _currentFertilisants++;
+        }
+    }
+
+    [SerializeField] private float _tempsMinFertilisant = 3f, _tempsMaxFertilisant = 4.3f, _factorFertilisant = 0.9f;
+    private int chanceOfNormal = 6;
+    private int chanceOfSuper = 1;
+    private int chanceOfMega = 0;
+
+    private IEnumerator FertilisantSpawning()
+    {
+        float delay;
+
+        while (_isPlaying)
+        {
+            delay = Random.Range(_tempsMinFertilisant, _tempsMaxFertilisant);
+            yield return new WaitForSeconds(delay);
+            if (_currentFertilisants < maxFertilisants)
+                SpotNewFertilisant(GetFertilisantType());
+        }
+    }
+
+    private int GetFertilisantType()
+    {
+        int randomPick = Random.Range(0, chanceOfNormal + chanceOfSuper + chanceOfMega);
+
+        bool isNormal = (randomPick >= 0 && randomPick <= chanceOfNormal);
+        bool isSuper = (randomPick >= chanceOfNormal + 1 && randomPick <= chanceOfNormal + chanceOfSuper);
+
+        if (isNormal) return 0;
+        else if (isSuper) return 1;
+        else return 2;
+    }
+
+    private IEnumerator FertilisantFactor()
+    {
+        while (_isPlaying)
+        {
+            yield return new WaitForSeconds(10);
+            _tempsMinFertilisant *= _factorFertilisant;
+            _tempsMaxFertilisant *= _factorFertilisant;
+            chanceOfSuper++;
+            chanceOfMega++;
+            maxFertilisants = Mathf.Clamp(maxFertilisants + 2, maxFertilisants, 7);
+        }
+    }
+
+    public void RemoveFertilisant()
+    {
+        _currentFertilisants--;
     }
 }
