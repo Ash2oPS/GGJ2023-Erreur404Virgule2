@@ -100,6 +100,13 @@ MonoBehaviour:
   _idleSprite: {fileID: -1435682832, guid: 4eee1f3cc70f7774d8bc1a3ac1cf9ccf, type: 3}
   _dashSprite: {fileID: 21300000, guid: 03d974e0fe036ff498b40e033a2dd18c, type: 3}
   _hurtSprite: {fileID: -182437427, guid: 3501a11a7324c1c488929414bf742a75, type: 3}
+  beingPushedSpeedCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _delayBetweenNewHeldLegume: 0
 --- !u!114 &3582550880432879442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +288,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4962127358709986435, guid: 762efc59507aeaa418b5b3bd0bc51bdf, type: 3}
+      propertyPath: _myPlayer
+      value: 
+      objectReference: {fileID: 3582550880432879443}
     - target: {fileID: 4962127358709986437, guid: 762efc59507aeaa418b5b3bd0bc51bdf, type: 3}
       propertyPath: m_Name
       value: Patate_Character (1)

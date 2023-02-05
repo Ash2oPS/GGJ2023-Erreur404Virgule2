@@ -5,6 +5,7 @@ using UnityEngine;
 public class CS_PlayerController : MonoBehaviour
 {
     [SerializeField] private KeyCode[] _inputs;
+    private CS_GameManager _gm;
 
     private Vector2[] _directions = new Vector2[4] {
         new Vector2(0,1) ,
@@ -16,6 +17,11 @@ public class CS_PlayerController : MonoBehaviour
     [SerializeField] private CS_Movement _movement;
 
     private Vector2 _currentDirection;
+
+    private void Awake()
+    {
+        _gm = FindObjectOfType<CS_GameManager>();
+    }
 
     private void Start()
     {
@@ -29,6 +35,9 @@ public class CS_PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!_gm.IsPlaying)
+            return;
+
         _currentDirection = Vector2.zero;
 
         for (int i = 0; i < _inputs.Length; i++)
@@ -71,7 +80,7 @@ public class CS_PlayerController : MonoBehaviour
 
     private void CallThrow()
     {
-        _movement.RegisterThrow();
+        _movement.RegisterHold();
     }
 
     private void CallRegisterMove()

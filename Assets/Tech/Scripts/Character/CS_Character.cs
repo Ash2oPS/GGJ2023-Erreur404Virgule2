@@ -12,6 +12,8 @@ public class CS_Character : MonoBehaviour
     [SerializeField] private Animation _animation;
     [SerializeField] private string _animationFileName;
 
+    public CS_Player _myPlayer;
+
     private bool _canHop = true;
 
     private Coroutine _currentCor;
@@ -132,13 +134,25 @@ public class CS_Character : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void BeingHeld()
+    public void BeingHeld(int index)
     {
-        StartCoroutine(HeldCoroutine());
+        StartCoroutine(HeldCoroutine(index));
     }
 
-    private IEnumerator HeldCoroutine()
+    private IEnumerator HeldCoroutine(int index)
     {
+        float timer = 0;
+        Vector3 basePos = transform.localPosition;
+        Vector3 destPos = new Vector3(0, 2 + index, 0);
+
+        while (timer < 1)
+        {
+            timer = Mathf.Clamp(timer + Time.deltaTime, 0, 1);
+
+            transform.localPosition = Vector3.Lerp(basePos, destPos, timer);
+
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     public void BeingThrown()
@@ -165,6 +179,11 @@ public class CS_Character : MonoBehaviour
         float posY = _bigHopCurve.Evaluate(_bigHopT);
 
         _sr.transform.localPosition = new Vector3(0, _baseY + posY, 0);
+
+        if (transform.position.y <= -5)
+        {
+            _myPlayer.RemoveCharacter(this, 0);
+        }
     }
 
     private void ChangeSprite(Sprite sprite)
