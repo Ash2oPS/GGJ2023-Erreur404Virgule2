@@ -10,7 +10,9 @@ public class CS_Piege : CS_OnTerrainActor
     [Tooltip("whatDeath : 0 => Hit, 1 => Sploutch, 2 => Burn, 3 => Cut")]
     [SerializeField] private int _whatDeath;
 
-    [SerializeField] private bool _isEnabled;
+    [SerializeField] protected bool _isEnabled;
+
+    public bool IsEnabled => _isEnabled;
 
     protected override void OnPlayerInteraction(CS_Player player)
     {
