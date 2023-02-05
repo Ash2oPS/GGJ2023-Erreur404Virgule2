@@ -31,7 +31,9 @@ public class CS_GameManager : MonoBehaviour
     [SerializeField] private float _facteurDEvolutionDesValeursDeTempsPendantLequelUnLapinResterDansUnTerrier = 0.9f;
 
     [Header("---References---")]
-    [SerializeField] private TextMeshProUGUI _winText;
+    [SerializeField] private Transform _winPatate, _winCarotte;
+
+    [SerializeField] private Animation _winAnim;
 
     [SerializeField] private CS_BunnySpot[] _allBunnySpots;
 
@@ -47,6 +49,8 @@ public class CS_GameManager : MonoBehaviour
 
     private bool _isPlaying = true;
     public bool IsPlaying => _isPlaying;
+
+    private Coroutine _currentBunnyCoroutine;
 
     private void Awake()
     {
@@ -97,14 +101,14 @@ public class CS_GameManager : MonoBehaviour
         if (isThereAWinner)
         {
             Time.timeScale = 0;
-            _winText.gameObject.SetActive(false);
+
             if (isPotatoes)
             {
-                _winText.text = "Les Patates ont gagné !";
+                _winPatate.gameObject.SetActive(true);
             }
             else
             {
-                _winText.text = "Les Carottes ont gagné !";
+                _winCarotte.gameObject.SetActive(true);
             }
             _audioSource.Stop();
         }
@@ -116,10 +120,10 @@ public class CS_GameManager : MonoBehaviour
 
         Time.timeScale = 1;
         _isPlaying = true;
-        _winText.gameObject.SetActive(false);
+
         _audioSource.PlayMusicWithFactor(_musique);
 
-        StartCoroutine(BunnySpotsManagement());
+        _currentBunnyCoroutine = StartCoroutine(BunnySpotsManagement());
         StartCoroutine(BunnyValuesEvolution());
     }
 
@@ -132,11 +136,11 @@ public class CS_GameManager : MonoBehaviour
 
         if (_patateScore == 0)
         {
-            StopGame(true, true);
+            StopGame(true, false);
         }
         if (_carotteScore == 0)
         {
-            StopGame(true, false);
+            StopGame(true, true);
         }
     }
 
@@ -218,8 +222,17 @@ public class CS_GameManager : MonoBehaviour
         }
     }
 
-    private void RemoveBunnyFromSpot(int index)
+    public void RemoveBunnyFromSpot(int index, bool stopCoroutine = false)
     {
         _allBunnySpots[index].RemoveBunnyFromHere();
+        StopCoroutine(_currentBunnyCoroutine);
+
+        if (stopCoroutine)
+            _currentBunnyCoroutine = StartCoroutine(BunnySpotsManagement());
+    }
+
+    public void RemoveBunnyFromSpot(CS_BunnySpot index, bool stopCoroutine = false)
+    {
+        RemoveBunnyFromSpot(Array.IndexOf(_allBunnySpots, index), stopCoroutine);
     }
 }

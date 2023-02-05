@@ -116,6 +116,7 @@ Transform:
   m_Children:
   - {fileID: 4962127357755787171}
   - {fileID: 5729984614856818565}
+  - {fileID: 8365249971479131048}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -136,7 +137,11 @@ MonoBehaviour:
   _hopSprite: {fileID: -1435682832, guid: 4eee1f3cc70f7774d8bc1a3ac1cf9ccf, type: 3}
   _preBigHopSprite: {fileID: -1270730718, guid: 4eee1f3cc70f7774d8bc1a3ac1cf9ccf, type: 3}
   _bigHopSprite: {fileID: -182437427, guid: 3501a11a7324c1c488929414bf742a75, type: 3}
-  _deadByHitSprite: {fileID: 21300000, guid: 6dd94f338dfd181498a0678c7b8ecd95, type: 3}
+  _pushedSprite: {fileID: 21300000, guid: 6dd94f338dfd181498a0678c7b8ecd95, type: 3}
+  _heldSprite: {fileID: -182437427, guid: 3501a11a7324c1c488929414bf742a75, type: 3}
+  _thrownSprite1: {fileID: -1058572672, guid: 3501a11a7324c1c488929414bf742a75, type: 3}
+  _thrownSprite2: {fileID: 380594007, guid: 3501a11a7324c1c488929414bf742a75, type: 3}
+  _deadByHitSprite: {fileID: 21300000, guid: 0314895a0878e1b43956b75401ce5ca5, type: 3}
   _deadBySploucthSprite: {fileID: 21300000, guid: 8abf46b7b56e44646b3c1e612f12955c, type: 3}
   _deadByBurnSprite: {fileID: 21300000, guid: e3a6268a4ce083446ab57631b415ab0c, type: 3}
   _deadByCutSprite: {fileID: 21300000, guid: f25462a7da24ce24095803660d2bb964, type: 3}
@@ -166,6 +171,10 @@ MonoBehaviour:
     m_RotationOrder: 4
   _animation: {fileID: 204606985349910353}
   _animationFileName: A_Patate_Die
+  _cloudParticleSpawner: {fileID: 8365249971479131048}
+  _particlePrefab: {fileID: 6451762235770557626, guid: 33e1151bc60f70b40965dac128efc7ff, type: 3}
+  IsHeld: 0
+  _myPlayer: {fileID: 0}
 --- !u!111 &204606985349910353
 Animation:
   m_ObjectHideFlags: 0
@@ -182,6 +191,37 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!1 &6077673284530921497
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8365249971479131048}
+  m_Layer: 0
+  m_Name: CloudPatricleSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8365249971479131048
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6077673284530921497}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.088}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4962127358709986432}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8219167150709280545
 GameObject:
   m_ObjectHideFlags: 0
