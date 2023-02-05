@@ -12,6 +12,8 @@ public class CS_Character : MonoBehaviour
     [SerializeField] private Animation _animation;
     [SerializeField] private string _animationFileName;
 
+    public CS_Player _myPlayer;
+
     private bool _canHop = true;
 
     private Coroutine _currentCor;
@@ -177,6 +179,11 @@ public class CS_Character : MonoBehaviour
         float posY = _bigHopCurve.Evaluate(_bigHopT);
 
         _sr.transform.localPosition = new Vector3(0, _baseY + posY, 0);
+
+        if (transform.position.y <= -5)
+        {
+            _myPlayer.RemoveCharacter(this, 0);
+        }
     }
 
     private void ChangeSprite(Sprite sprite)

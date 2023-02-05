@@ -105,6 +105,11 @@ public abstract class CS_Player : MonoBehaviour
         }
 
         pc.DieFromCringe(whatDeath);
+
+        if (this is CS_PatatePlayer)
+            _gm.RemoveCharacterUI(0);
+        else if (this is CS_CarottePlayer)
+            _gm.RemoveCharacterUI(1);
     }
 
     /// <summary>
