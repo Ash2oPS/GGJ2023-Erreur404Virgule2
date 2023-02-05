@@ -71,7 +71,7 @@ public class CS_PlayerController : MonoBehaviour
 
     private void CallThrow()
     {
-        _movement.RegisterThrow();
+        _movement.RegisterHold();
     }
 
     private void CallRegisterMove()

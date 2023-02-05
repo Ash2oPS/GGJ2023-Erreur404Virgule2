@@ -28,7 +28,7 @@ public class CS_Movement : MonoBehaviour
     public bool IsDashing => _isDashing;
 
     private bool _hasToThrow, _isThrowing;
-    private bool _canThrow => (!_isThrowing && !_hasToThrow && !_isDashing && !_isBeingPushed);
+    private bool _canThrow => (!_isThrowing && !_hasToThrow && !_isDashing && !_isBeingPushed && _numberOfLegumesHeld > 0);
     public bool IsThrowing => _isThrowing;
 
     private bool _isBeingPushed;
@@ -60,12 +60,19 @@ public class CS_Movement : MonoBehaviour
         }
     }
 
-    public void RegisterThrow()
+    private int _numberOfLegumesHeld = 0;
+    [SerializeField] private float _delayBetweenNewHeldLegume;
+
+    public void RegisterHold()
     {
-        if (_canThrow)
-        {
-            _hasToThrow = true;
-        }
+        //if (_canThrow)
+        //{
+        //    _hasToThrow = true;
+        //}
+    }
+
+    private void Update()
+    {
     }
 
     #endregion Register Inputs
