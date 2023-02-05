@@ -104,7 +104,8 @@ public abstract class CS_Player : MonoBehaviour
             return;
         }
 
-        pc.DieFromCringe(whatDeath);
+        if (whatDeath != -1)
+            pc.DieFromCringe(whatDeath);
 
         if (this is CS_PatatePlayer)
             _gm.RemoveCharacterUI(0);
@@ -125,10 +126,9 @@ public abstract class CS_Player : MonoBehaviour
         float dist = 0f;
         CS_Character output = null;
 
-        Debug.Log(GetComponentsInChildren<CS_Character>().Length);
         foreach (var item in GetComponentsInChildren<CS_Character>())
         {
-            if (item.transform.localPosition.magnitude > dist)
+            if (item.transform.localPosition.magnitude > dist && !item.IsHeld)
             {
                 dist = item.transform.localPosition.magnitude;
                 output = item;

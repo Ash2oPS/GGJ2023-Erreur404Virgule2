@@ -52,9 +52,13 @@ public class CS_PlayerController : MonoBehaviour
             CallDash();
         }
 
-        if (Input.GetKey(_inputs[5]))
+        if (Input.GetKeyDown(_inputs[5]))
         {
-            CallThrow();
+            CallStartThrow();
+        }
+        else if (Input.GetKeyUp(_inputs[5]))
+        {
+            CallStopThrow();
         }
     }
 
@@ -78,9 +82,14 @@ public class CS_PlayerController : MonoBehaviour
         _movement.RegisterDash();
     }
 
-    private void CallThrow()
+    private void CallStartThrow()
     {
         _movement.RegisterHold();
+    }
+
+    private void CallStopThrow()
+    {
+        _movement.RegisterStopHold();
     }
 
     private void CallRegisterMove()

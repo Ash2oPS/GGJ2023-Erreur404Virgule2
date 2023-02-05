@@ -32,6 +32,7 @@ Transform:
   m_Children:
   - {fileID: 3520018351150501265}
   - {fileID: 1627203538627684330}
+  - {fileID: 1274870290524098697}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0.05, y: 0, z: 0}
@@ -52,7 +53,11 @@ MonoBehaviour:
   _hopSprite: {fileID: -1600814630, guid: 34cff649e58547d4b9be40ac19c27d8a, type: 3}
   _preBigHopSprite: {fileID: 1811719162, guid: 9fbd309d946c2b04ab358c209ecbebc0, type: 3}
   _bigHopSprite: {fileID: 48199452, guid: 9fbd309d946c2b04ab358c209ecbebc0, type: 3}
-  _deadByHitSprite: {fileID: 21300000, guid: 84f905efcd990234dad05e090fd22a88, type: 3}
+  _pushedSprite: {fileID: 21300000, guid: 84f905efcd990234dad05e090fd22a88, type: 3}
+  _heldSprite: {fileID: -370278192, guid: 66914184b8cdf5640bd7960e17cc5712, type: 3}
+  _thrownSprite1: {fileID: 681244323, guid: 66914184b8cdf5640bd7960e17cc5712, type: 3}
+  _thrownSprite2: {fileID: -28226114, guid: 66914184b8cdf5640bd7960e17cc5712, type: 3}
+  _deadByHitSprite: {fileID: 21300000, guid: 6174d59833d622e42b586e2a51067f9b, type: 3}
   _deadBySploucthSprite: {fileID: 21300000, guid: 52e66379b1c62a54cb95ba95adb070f8, type: 3}
   _deadByBurnSprite: {fileID: 21300000, guid: dcee724a186422c4c94b8a6d5ed1860c, type: 3}
   _deadByCutSprite: {fileID: 21300000, guid: 4a942c92877829c4f9b0421387e40f96, type: 3}
@@ -82,6 +87,10 @@ MonoBehaviour:
     m_RotationOrder: 4
   _animation: {fileID: 9021225306310628804}
   _animationFileName: A_Carotte_Die
+  _cloudParticleSpawner: {fileID: 1274870290524098697}
+  _particlePrefab: {fileID: 6451762235770557626, guid: 33e1151bc60f70b40965dac128efc7ff, type: 3}
+  IsHeld: 0
+  _myPlayer: {fileID: 0}
 --- !u!111 &9021225306310628804
 Animation:
   m_ObjectHideFlags: 0
@@ -182,6 +191,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &6639753513658003587
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1274870290524098697}
+  m_Layer: 0
+  m_Name: SpawnerParticules
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1274870290524098697
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6639753513658003587}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.041, z: 0.111}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3520018349624603148}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7717769970603354058
 GameObject:
   m_ObjectHideFlags: 0

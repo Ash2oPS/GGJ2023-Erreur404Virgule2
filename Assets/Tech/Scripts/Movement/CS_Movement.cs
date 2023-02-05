@@ -10,6 +10,7 @@ public class CS_Movement : MonoBehaviour
     [SerializeField] private CharacterController _cc;
     [SerializeField] private CS_Indicators _indicators;
     [SerializeField] private Sprite _idleSprite, _dashSprite, _hurtSprite;
+    [SerializeField] private float _tempsEntreChaqueLegumePorte = 1f;
 
     private Vector2 _lastDirection = new Vector2(0, -1);
     private Vector2 _beingPushedDir;
@@ -24,15 +25,17 @@ public class CS_Movement : MonoBehaviour
     private float yDir;
 
     private bool _hasToDash, _isDashing;
-    private bool _canDash => (!_isDashing && !_hasToDash && !_isThrowing && !_isBeingPushed);
+    private bool _canDash => (!_isDashing && !_hasToDash && !_isHolding && !_isBeingPushed);
     public bool IsDashing => _isDashing;
 
-    private bool _hasToThrow, _isThrowing;
-    private bool _canThrow => (!_isThrowing && !_hasToThrow && !_isDashing && !_isBeingPushed && _numberOfLegumesHeld > 0);
-    public bool IsThrowing => _isThrowing;
+    private bool _isHolding;
+    private bool _boolHasToThrow => (!_isHolding && _numberOfLegumesHeld > 0);
+    private bool _canHold => (!_isDashing && !_isBeingPushed);
 
     private bool _isBeingPushed;
     public bool IsBeingPushed => _isBeingPushed;
+
+    private Coroutine _currentHoldingCoroutine;
 
     private void Start()
     {
@@ -65,14 +68,53 @@ public class CS_Movement : MonoBehaviour
 
     public void RegisterHold()
     {
-        //if (_canThrow)
-        //{
-        //    _hasToThrow = true;
-        //}
+        _isHolding = true;
+
+        _currentHoldingCoroutine = StartCoroutine(HoldingCoroutine());
+    }
+
+    private IEnumerator HoldingCoroutine()
+    {
+        bool isCarotte = TryGetComponent(out CS_CarottePlayer c);
+        bool isPatate = TryGetComponent(out CS_PatatePlayer p);
+
+        int _currentScore = 0;
+
+        if (isCarotte)
+            _currentScore = c.Score;
+        else _currentScore = p.Score;
+
+        while (_numberOfLegumesHeld < 3 && _currentScore > 1)
+        {
+            yield return new WaitForSeconds(_tempsEntreChaqueLegumePorte);
+            _currentScore--;
+
+            CS_Character oui = GetFarthestCharacter();
+
+            if (isCarotte)
+                c.RemoveCharacter(oui, -1);
+            else p.RemoveCharacter(oui, -1);
+
+            GetFarthestCharacter().SpawnParticle();
+            GetFarthestCharacter().BeingHeld(_numberOfLegumesHeld + 1);
+            _numberOfLegumesHeld++;
+        }
+    }
+
+    public void RegisterStopHold()
+    {
+        StopCoroutine(_currentHoldingCoroutine);
+
+        _currentHoldingCoroutine = null;
+
+        _isHolding = false;
     }
 
     private void Update()
     {
+        //if (_hasToThrow)
+        //{
+        //}
     }
 
     #endregion Register Inputs
@@ -85,7 +127,6 @@ public class CS_Movement : MonoBehaviour
         Move();
         BeingPushed();
         Dash();
-        Throw();
     }
 
     private void CalculateGravity()
@@ -144,15 +185,6 @@ public class CS_Movement : MonoBehaviour
         }
     }
 
-    private void Throw()
-    {
-        if (!_hasToThrow)
-            return;
-
-        _hasToThrow = false;
-        StartCoroutine(ThrowCoroutine());
-    }
-
     #endregion Fixed Updates
 
     private void StopDashDirection()
@@ -183,24 +215,27 @@ public class CS_Movement : MonoBehaviour
         SetIsDashing(false);
     }
 
-    private IEnumerator ThrowCoroutine()
-    {
-        SetIsThrowing(true);
-        yield return new WaitForSeconds(_throwDelay);
-        SetIsThrowing(false);
-    }
-
     private IEnumerator BeingPushedCoroutine()
     {
         _isBeingPushed = true;
         SetInBeingHurt(true);
         durationBeingPushed = 0f;
 
+        foreach (var item in GetComponentsInChildren<CS_Character>())
+        {
+            item.SetPushed(true);
+        }
+
         while (durationBeingPushed < _beingPushedDelay)
         {
             durationBeingPushed += Time.deltaTime;
 
             yield return new WaitForEndOfFrame();
+        }
+
+        foreach (var item in GetComponentsInChildren<CS_Character>())
+        {
+            item.SetPushed(false);
         }
 
         _isBeingPushed = false;
@@ -250,27 +285,6 @@ public class CS_Movement : MonoBehaviour
         foreach (var item in GetComponentsInChildren<CS_Character>())
         {
             item.SetCanHop(true);
-        }
-    }
-
-    private void SetIsThrowing(bool value)
-    {
-        _isThrowing = value;
-
-        if (_isThrowing)
-        {
-            foreach (var item in GetComponentsInChildren<SpriteRenderer>())
-            {
-                if (item.transform.name.Contains("Carotte") || item.transform.name.Contains("Patate"))
-                    item.color = Color.green;
-            }
-            return;
-        }
-
-        foreach (var item in GetComponentsInChildren<SpriteRenderer>())
-        {
-            if (item.transform.name.Contains("Carotte") || item.transform.name.Contains("Patate"))
-                item.color = Color.white;
         }
     }
 
@@ -325,4 +339,21 @@ public class CS_Movement : MonoBehaviour
     }
 
     #endregion Other Players Actions
+
+    private CS_Character GetFarthestCharacter()
+    {
+        float dist = 0f;
+        CS_Character output = null;
+
+        foreach (var item in GetComponentsInChildren<CS_Character>())
+        {
+            if (item.transform.localPosition.magnitude > dist && !item.IsHeld)
+            {
+                dist = item.transform.localPosition.magnitude;
+                output = item;
+            }
+        }
+
+        return output;
+    }
 }

@@ -14,6 +14,5 @@ public abstract class CS_OnTerrainActor : MonoBehaviour
 
     protected virtual void OnPlayerInteraction(CS_Player player)
     {
-        Debug.Log("oui " + player.name);
     }
 }

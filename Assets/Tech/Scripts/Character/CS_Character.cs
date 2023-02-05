@@ -6,12 +6,21 @@ using UnityEngine;
 public class CS_Character : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _sr;
-    [SerializeField] private Sprite _groundedSprite, _hopSprite, _preBigHopSprite, _bigHopSprite;
+    [SerializeField] private Sprite _groundedSprite, _hopSprite, _preBigHopSprite, _bigHopSprite, _pushedSprite, _heldSprite, _thrownSprite1, _thrownSprite2;
     [SerializeField] private Sprite _deadByHitSprite, _deadBySploucthSprite, _deadByBurnSprite, _deadByCutSprite;
     [SerializeField] private AnimationCurve _bigHopCurve;
     [SerializeField] private Animation _animation;
     [SerializeField] private string _animationFileName;
+    [SerializeField] private Transform _cloudParticleSpawner;
+    [SerializeField] private CS_Particle _particlePrefab;
 
+    private Coroutine _hopCor;
+
+    public bool IsHeld;
+
+    private int _currentDir = 1;
+
+    [SerializeField]
     public CS_Player _myPlayer;
 
     private bool _canHop = true;
@@ -24,7 +33,32 @@ public class CS_Character : MonoBehaviour
     private void Start()
     {
         _currentCor = StartCoroutine(HopCoroutine());
+        _currentCor = StartCoroutine(StartParticles());
         _baseY = _sr.transform.localPosition.y;
+    }
+
+    public void SetPushed(bool value)
+    {
+        SetCanHop(value);
+
+        _sr.sprite = value ? _pushedSprite : _groundedSprite;
+    }
+
+    private IEnumerator StartParticles()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(3);
+            {
+                SpawnParticle();
+            }
+        }
+    }
+
+    public void SpawnParticle()
+    {
+        CS_Particle newPart = Instantiate(_particlePrefab, _cloudParticleSpawner.position, Quaternion.identity);
+        newPart.OnCreated(_currentDir);
     }
 
     public void SetCanHop(bool canHop)
@@ -44,6 +78,8 @@ public class CS_Character : MonoBehaviour
 
     public void SetSpriteDir(int dir)
     {
+        _currentDir = dir;
+
         if (dir == -1)
         {
             _sr.transform.localEulerAngles = new Vector3(30, 0, 0);
@@ -136,14 +172,17 @@ public class CS_Character : MonoBehaviour
 
     public void BeingHeld(int index)
     {
-        StartCoroutine(HeldCoroutine(index));
+        StartCoroutine(HeldCoroutine(index - 1));
     }
 
     private IEnumerator HeldCoroutine(int index)
     {
+        IsHeld = true;
         float timer = 0;
         Vector3 basePos = transform.localPosition;
         Vector3 destPos = new Vector3(0, 2 + index, 0);
+        _sr.sprite = _heldSprite;
+        SetCanHop(false);
 
         while (timer < 1)
         {
